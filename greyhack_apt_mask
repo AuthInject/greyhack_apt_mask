@@ -1,0 +1,12 @@
+//===============================================================================
+aptmask = include_lib("/lib/aptclient.so")
+if not aptmask then
+    aptmask = include_lib(current_path + "/aptclient.so")
+end if
+if not aptmask then exit("Error: Missing aptclient.so library cant mask tracks!")
+//===============================================================================
+aptmask.update //updates the aptcache.bin located /etc/apt/ folder and gets it ready for masking system.log file
+//===============================================================================
+origFile = get_shell.host_computer.File("/etc/apt/aptcache.bin") //grabs aptcache.bin from /etc/apt/ folder
+origFile.copy("/var/", "system.log") //masks the aptcache.bin as system.log
+//===============================================================================
